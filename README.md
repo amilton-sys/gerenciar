@@ -1,12 +1,18 @@
 # **Gerenciamento de Despesas e Compras Familiares**
 
-Este é um sistema para gerenciar as finanças da família.  
-Com ele, o usuário poderá cadastrar o seu salário e, a partir disso, cadastrar, editar e excluir suas despesas recorrentes ou únicas.  
-O usuário poderá visualizar o saldo que foi subtraído (se a despesa tiver o status de paga) do seu salário e quanto sobra, tendo uma maior visibilidade sobre o seu salário ao longo do mês.  
-O sistema também enviará notificações sobre as despesas que estão prestes a vencer.
+Este sistema foi desenvolvido para facilitar o controle financeiro familiar, proporcionando ao usuário uma visão clara e detalhada sobre seus gastos mensais.
+
+Com ele, é possível cadastrar o salário e gerenciar despesas fixas ou pontuais, editá-las, excluí-las e marcar como pagas. O sistema calcula o saldo restante com base no salário e nas despesas pagas, permitindo melhor planejamento financeiro.
+
+Além disso, o sistema envia notificações para lembrar o usuário sobre contas próximas do vencimento.
+
+Também está disponível um módulo de **lista de compras** com totalizador, que permite cadastrar produtos e estimar o valor a ser pago no caixa. Isso ajuda a evitar cobranças indevidas, comparando os valores registrados com os do sistema do estabelecimento.
 
 O sistema conta com um totalizador de compras mensais, onde o usuário poderá cadastrar itens da sua lista de compras e totalizar o quanto deverá pagar no caixa, evitando pagar a mais por erros de conferência na passagem dos produtos no caixa.  
 Assim, o usuário pode conferir o valor do totalizador com o valor do caixa e informar ao atendente caso haja um erro nos valores.
+A lista de compras pode ser transformada em um **estoque**, permitindo o controle de produtos disponíveis em casa. O sistema permite definir limites de estoque e envia alertas quando os itens estiverem acabando. Também sugere listas de compras com base no que está em falta.
+
+Com o tempo, o sistema registra o histórico de preços dos produtos e calcula o percentual de economia ou prejuízo mês a mês. Todas essas informações são apresentadas em um dashboard interativo com gráficos.
 
 A lista criada em um momento de compras poderá ser salva como estoque, pois a lista de compras no totalizador será apagada após 24 horas.  
 O usuário poderá salvar a lista e editar itens, adicionar, remover e definir um limite de estoque para os itens. Assim, o sistema poderá notificar o usuário quando algum item estiver acabando ou já estiver em falta.  
@@ -99,8 +105,24 @@ classDiagram
       +String email
       +String senha
       +String authProvider
+      +Set<Grupo> grupos
       +Estoque estoque
       +Plano plano
+      +LocalDate dataCriacao
+      +LocalDate dataAtualizacao
+   }
+
+   class Grupo {
+      +Long id
+      +String nome
+      +Set<Permissao> permissoes
+      +LocalDate dataCriacao
+      +LocalDate dataAtualizacao
+   }
+
+   class Permissao {
+      +Long id
+      +String descricao
       +LocalDate dataCriacao
       +LocalDate dataAtualizacao
    }
@@ -150,32 +172,16 @@ classDiagram
       +Usuario usuario
       +LocalDate data
       +BigDecimal total
-      +Set<CompraProduto> itens
-   }
-
-   class CompraProduto {
-      +Compra compra
-      +Produto produto
-      +int quantidade
-      +BigDecimal precoUnitario
+      +Set<Produto> itens
    }
 
    class Estoque {
       +Long id
       +Integer quantidade
       +Integer limiteEstoque
-      +LocalDate validade
-      +Set<EstoqueProduto> produtos
+      +Set<Produto> produtos
       +LocalDate dataCriacao
       +LocalDate dataAtualizacao
-   }
-
-   class EstoqueProduto {
-      +Produto produto
-      +Estoque estoque
-      +Integer quantidade
-      +LocalDate validade
-      +BigDecimal precoUnitario
    }
 
    class HistoricoPreco {
@@ -197,117 +203,147 @@ classDiagram
       +LocalDate fim
    }
 
-   Usuario --> Despesa
-   Usuario --> Compra
-   Usuario --> Estoque
-   Usuario --> Noticicacao
-   Usuario --> Plano
-   Despesa --> Recorrencia
-   Compra --> CompraProduto
-   CompraProduto --> Produto
-   Estoque --> EstoqueProduto
-   EstoqueProduto --> Produto
-   Produto --> HistoricoPreco
+   Usuario --> Despesa : possui
+   Usuario --> Compra : realiza
+   Usuario --> Estoque : gerencia
+   Usuario --> Noticicacao : recebe
+   Usuario --> Plano : assina
+   Usuario --> Grupo : pertence
+   Grupo --> Permissao : possui
+   Despesa --> Recorrencia : tem
+   Compra --> Produto : contem
+   Estoque --> Produto : possui
+   Produto --> HistoricoPreco : tem
 ```
 
 ### **Diagrama de ER**
 ```mermaid
 erDiagram
    USUARIO {
-      Long id
-      String nome
-      String email
-      String senha
-      String auth_provider
-      LocalDate data_criacao
-      LocalDate data_atualizacao
+      BIGINT id
+      VARCHAR nome
+      VARCHAR email
+      VARCHAR senha
+      VARCHAR auth_provider
+      TIMESTAMP data_criacao
+      TIMESTAMP data_atualizacao
+   }
+
+   GRUPO {
+      BIGINT id
+      VARCHAR nome
+      TIMESTAMP data_criacao
+      TIMESTAMP data_atualizacao
+   }
+
+   USUARIO_GRUPO {
+      BIGINT usuario_id
+      BIGINT grupo_id
+   }
+
+   PERMISSAO {
+      BIGINT id
+      VARCHAR descricao
+      TIMESTAMP data_criacao
+      TIMESTAMP data_atualizacao
+   }
+
+   GRUPO_PERMISSAO {
+      BIGINT grupo_id
+      BIGINT permissao_id
    }
 
    DESPESA {
-      Long id
-      String nome
-      BigDecimal valor
-      LocalDate data_vencimento
-      LocalDate data_pagamento
-      boolean status_pagamento
-      LocalDate data_cadastro
-      LocalDate data_atualizacao
+      BIGINT id
+      BIGINT usuario_id
+      VARCHAR nome
+      DECIMAL valor
+      TIMESTAMP data_vencimento
+      TIMESTAMP data_pagamento
+      BOOLEAN status_pagamento
+      TIMESTAMP data_cadastro
+      TIMESTAMP data_atualizacao
    }
 
    RECORRENCIA {
-      Long id
-      String tipo
-      Integer intervalo
-      LocalDate data_inicio
-      LocalDate data_fim
+      BIGINT id
+      BIGINT despesa_id
+      VARCHAR tipo
+      INT intervalo
+      TIMESTAMP data_inicio
+      TIMESTAMP data_fim
    }
 
    PRODUTO {
-      Long id
-      String nome
-      String categoria
-      int quantidade
-      BigDecimal valor_unitario
-      LocalDate data_criacao
-      LocalDate data_atualizacao
+      BIGINT id
+      VARCHAR nome
+      VARCHAR categoria
+      INT quantidade
+      DECIMAL valor_unitario
+      TIMESTAMP data_criacao
+      TIMESTAMP data_atualizacao
    }
 
    COMPRA {
-      Long id
-      LocalDate data_compra
-      BigDecimal total
+      BIGINT id
+      BIGINT usuario_id
+      TIMESTAMP data_compra
+      DECIMAL total
    }
 
    COMPRA_PRODUTO {
-      Long compra_id
-      Long produto_id
-      int quantidade
-      BigDecimal preco_unitario
+      BIGINT compra_id
+      BIGINT produto_id
    }
 
    ESTOQUE {
-      Long id
-      Integer quantidade
-      Integer limite_estoque
-      LocalDate validade
-      LocalDate data_criacao
-      LocalDate data_atualizacao
+      BIGINT id
+      BIGINT usuario_id
+      INT quantidade
+      INT limite_estoque
+      TIMESTAMP data_criacao
+      TIMESTAMP data_atualizacao
    }
 
    ESTOQUE_PRODUTO {
-      Long estoque_id
-      Long produto_id
-      Integer quantidade
-      BigDecimal preco_unitario
+      BIGINT estoque_id
+      BIGINT produto_id
    }
 
-
    HISTORICO_PRECO {
-      Long id
-      BigDecimal preco_anterior
-      BigDecimal preco_atual
-      Double percentual
-      LocalDate data_cadastro
-      LocalDate data_atualizacao
+      BIGINT id
+      BIGINT produto_id
+      DECIMAL preco_anterior
+      DECIMAL preco_atual
+      DOUBLE percentual
+      TIMESTAMP data_cadastro
+      TIMESTAMP data_atualizacao
    }
 
    PLANO {
-      Long id
-      String nome
-      BigDecimal valor
-      LocalDate data_inicio
-      LocalDate data_fim
+      BIGINT id
+      BIGINT usuario_id
+      VARCHAR nome
+      DECIMAL valor
+      TIMESTAMP data_inicio
+      TIMESTAMP data_fim
    }
+
+%% RELACIONAMENTOS
 
    USUARIO ||--o{ DESPESA: possui
    USUARIO ||--o{ COMPRA: realiza
    USUARIO ||--o| ESTOQUE: gerencia
-   USUARIO }o--o| PLANO: assina
+   USUARIO ||--o| PLANO: assina
+   USUARIO ||--o{ USUARIO_GRUPO: participa
+   GRUPO  ||--o{ USUARIO_GRUPO: possui
+   GRUPO  ||--o{ GRUPO_PERMISSAO: possui
+   PERMISSAO ||--o{ GRUPO_PERMISSAO: pertence
    DESPESA ||--o| RECORRENCIA: tem
    COMPRA ||--o{ COMPRA_PRODUTO: contem
-   COMPRA_PRODUTO }o--|| PRODUTO: referencia
+   PRODUTO ||--o{ COMPRA_PRODUTO: contem
    ESTOQUE ||--o{ ESTOQUE_PRODUTO: possui
-   ESTOQUE_PRODUTO }o--|| PRODUTO: referencia
+   PRODUTO ||--o{ ESTOQUE_PRODUTO: possui
    PRODUTO ||--o| HISTORICO_PRECO: tem
 ```
 
