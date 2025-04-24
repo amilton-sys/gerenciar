@@ -46,7 +46,6 @@ O usuário poderá ver um dashboard com todas as suas despesas, percentuais e va
 - Totalizador de lista de compras com valor total e percentual de economia.
 - Armazenamento em estoque.
 
-- 
 ### 4. **Gestão de Estoque:**
 - Edição, exclusão e adição de item no estoque.
 - Controle de limite de estoque
