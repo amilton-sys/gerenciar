@@ -105,8 +105,6 @@ classDiagram
       +String senha
       +String authProvider
       +Set<Grupo> grupos
-      +Estoque estoque
-      +Plano plano
       +LocalDate dataCriacao
       +LocalDate dataAtualizacao
    }
@@ -176,6 +174,7 @@ classDiagram
 
    class Estoque {
       +Long id
+      +Usuario usuario
       +Integer quantidade
       +Integer limiteEstoque
       +Set<Produto> produtos
