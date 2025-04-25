@@ -11,7 +11,7 @@ create table usuario (
 
 create table grupo (
     id bigint not null auto_increment,
-    nome varchar(60) not null unique,
+    nome varchar(60) not null,
     data_criacao datetime default current_timestamp,
     data_atualizacao datetime default current_timestamp on update current_timestamp,
     primary key (id)
@@ -28,7 +28,7 @@ create table recorrencia (
 
 create table permissao (
     id bigint not null auto_increment,
-    descricao varchar(100) not null unique,
+    descricao varchar(100) not null,
     data_criacao datetime default current_timestamp,
     data_atualizacao datetime default current_timestamp on update current_timestamp,
     primary key (id)
@@ -36,7 +36,7 @@ create table permissao (
 
 create table produto (
     id bigint not null auto_increment,
-    nome varchar(60) not null unique,
+    nome varchar(60) not null,
     categoria varchar(30) not null,
     quantidade int not null,
     valor_unitario decimal(10,2) not null,
