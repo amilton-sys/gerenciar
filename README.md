@@ -105,25 +105,23 @@ classDiagram
       +String senha
       +String authProvider
       +Set<Grupo> grupos
-      +Estoque estoque
-      +Plano plano
-      +LocalDate dataCriacao
-      +LocalDate dataAtualizacao
+      +OffsetDateTime dataCriacao
+      +OffsetDateTime dataAtualizacao
    }
 
    class Grupo {
       +Long id
       +String nome
       +Set<Permissao> permissoes
-      +LocalDate dataCriacao
-      +LocalDate dataAtualizacao
+      +OffsetDateTime dataCriacao
+      +OffsetDateTime dataAtualizacao
    }
 
    class Permissao {
       +Long id
       +String descricao
-      +LocalDate dataCriacao
-      +LocalDate dataAtualizacao
+      +OffsetDateTime dataCriacao
+      +OffsetDateTime dataAtualizacao
    }
 
    class Noticicacao {
@@ -131,8 +129,8 @@ classDiagram
       +Usuario usuario
       +String tipo
       +String descricao
-      +LocalDate dataCriacao
-      +LocalDate dataAtualizacao
+      +OffsetDateTime dataCriacao
+      +OffsetDateTime dataAtualizacao
    }
 
    class Despesa {
@@ -144,16 +142,16 @@ classDiagram
       +LocalDate dataPagamento
       +boolean statusPagamento
       +Recorrencia recorrencia
-      +LocalDate dataCriacao
-      +LocalDate dataAtualizacao
+      +OffsetDateTime dataCriacao
+      +OffsetDateTime dataAtualizacao
    }
 
    class Recorrencia {
       +Long id
       +String tipo
       +Integer intervalo
-      +LocalDate dataInicio
-      +LocalDate dataFim
+      +OffsetDateTime dataInicio
+      +OffsetDateTime dataFim
    }
 
    class Produto {
@@ -162,8 +160,8 @@ classDiagram
       +String categoria
       +int quantidade
       +BigDecimal valorUnitario
-      +LocalDate dataCriacao
-      +LocalDate dataAtualizacao
+      +OffsetDateTime dataCriacao
+      +OffsetDateTime dataAtualizacao
    }
 
    class Compra {
@@ -176,11 +174,12 @@ classDiagram
 
    class Estoque {
       +Long id
+      +Usuario usuario
       +Integer quantidade
       +Integer limiteEstoque
       +Set<Produto> produtos
-      +LocalDate dataCriacao
-      +LocalDate dataAtualizacao
+      +OffsetDateTime dataCriacao
+      +OffsetDateTime dataAtualizacao
    }
 
    class HistoricoPreco {
@@ -189,8 +188,8 @@ classDiagram
       +BigDecimal precoAnterior
       +BigDecimal precoAtual
       +double percentual
-      +LocalDate dataCriacao
-      +LocalDate dataAtualizacao
+      +OffsetDateTime dataCriacao
+      +OffsetDateTime dataAtualizacao
    }
 
    class Plano {
@@ -198,8 +197,8 @@ classDiagram
       +Usuario usuario
       +String nome
       +BigDecimal valor
-      +LocalDate inicio
-      +LocalDate fim
+      +OffsetDateTime inicio
+      +OffsetDateTime fim
    }
 
    Usuario --> Despesa : possui
