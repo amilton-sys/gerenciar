@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,7 +33,7 @@ public class Usuario {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "grupo_id")
     )
-    private Set<Grupo> grupos;
+    private Set<Grupo> grupos = new HashSet<>();
     @CreationTimestamp
     private OffsetDateTime dataCriacao;
     @UpdateTimestamp
