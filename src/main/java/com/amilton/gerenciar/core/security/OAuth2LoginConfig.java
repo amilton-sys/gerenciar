@@ -17,17 +17,15 @@ public class OAuth2LoginConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .anyRequest().authenticated()
+        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .anyRequest().authenticated()
                 )
-                .oauth2Login(oauth2Login ->
-                        oauth2Login
-                                .userInfoEndpoint(userInfoEndpoint ->
-                                        userInfoEndpoint.userService(oAuth2UserService)
-                                )
-                                // TODO ALTERAR REDIRECT PARA A TELA CORRETA QUANDO ESTIVER FEITA
-                                .defaultSuccessUrl("/todo-implementar", true)
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .userInfoEndpoint(userInfoEndpoint ->
+                                userInfoEndpoint.userService(oAuth2UserService)
+                        )
+                        // TODO ALTERAR REDIRECT PARA A TELA CORRETA QUANDO ESTIVER FEITA
+                        .defaultSuccessUrl("/todo-implementar", true)
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/")
