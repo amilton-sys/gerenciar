@@ -12,7 +12,6 @@ public class Estoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;

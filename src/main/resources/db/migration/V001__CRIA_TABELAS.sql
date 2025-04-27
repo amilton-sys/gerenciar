@@ -3,6 +3,8 @@ create table usuario (
     nome varchar(60) not null,
     email varchar(100) not null unique,
     senha varchar(255) not null,
+    imagem_url varchar(100),
+    ativo boolean not null,
     auth_provider varchar(30) not null,
     data_criacao datetime default current_timestamp,
     data_atualizacao datetime default current_timestamp on update current_timestamp,
@@ -28,6 +30,7 @@ create table recorrencia (
 
 create table permissao (
     id bigint not null auto_increment,
+    nome varchar(60) not null,
     descricao varchar(100) not null,
     data_criacao datetime default current_timestamp,
     data_atualizacao datetime default current_timestamp on update current_timestamp,
