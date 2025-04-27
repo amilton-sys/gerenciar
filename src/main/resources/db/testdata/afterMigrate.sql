@@ -31,12 +31,12 @@ alter table despesa auto_increment = 1;
 alter table historico_preco auto_increment = 1;
 
 -- Inserindo permissões básicas
-insert into permissao (descricao) values
-('ADMIN'),
-('GERENCIAR_USUARIOS'),
-('GERENCIAR_PRODUTOS'),
-('GERENCIAR_ESTOQUE'),
-('VISUALIZAR_RELATORIOS');
+insert into permissao (nome,descricao) values
+('GERENCIAR_USUARIOS','Permite gerenciar usuários'),
+('GERENCIAR_PRODUTOS','Permite gerenciar produtos'),
+('GERENCIAR_ESTOQUE','Permite gerenciar estoque'),
+('GERENCIAR_TOTALIZADOR','Permite gerenciar totalizador'),
+('VISUALIZAR_RELATORIOS','Permite visualizar relatórios');
 
 -- Inserindo grupo Administrador
 insert into grupo (nome) values ('ADMINISTRADOR');
@@ -48,20 +48,20 @@ from grupo g, permissao p
 where g.nome = 'ADMINISTRADOR';
 
 -- Inserindo usuário trial
-insert into usuario (nome, email, senha, auth_provider)
-values ('Trial', 'trial@sistema.com', '$2a$12$VhE1kR.G35Xqy6X2IAkZLeGMob1Lz4ET223Q7K3FTweXCuhAtvl22', 'LOCAL');
+insert into usuario (nome, email, senha, auth_provider, imagem_url, ativo)
+values ('Trial', 'trial@sistema.com', '$2a$12$VhE1kR.G35Xqy6X2IAkZLeGMob1Lz4ET223Q7K3FTweXCuhAtvl22', 'LOCAL', '#', true);
 
 -- Inserindo usuário free
-insert into usuario (nome, email, senha, auth_provider)
-values ('Free', 'free@sistema.com', '$2a$12$VhE1kR.G35Xqy6X2IAkZLeGMob1Lz4ET223Q7K3FTweXCuhAtvl22', 'LOCAL');
+insert into usuario (nome, email, senha, auth_provider, imagem_url, ativo)
+values ('Free', 'free@sistema.com', '$2a$12$VhE1kR.G35Xqy6X2IAkZLeGMob1Lz4ET223Q7K3FTweXCuhAtvl22', 'LOCAL', '#', true);
 
 -- Inserindo usuário premium
-insert into usuario (nome, email, senha, auth_provider)
-values ('Premium', 'premium@sistema.com', '$2a$12$VhE1kR.G35Xqy6X2IAkZLeGMob1Lz4ET223Q7K3FTweXCuhAtvl22', 'LOCAL');
+insert into usuario (nome, email, senha, auth_provider, imagem_url, ativo)
+values ('Premium', 'premium@sistema.com', '$2a$12$VhE1kR.G35Xqy6X2IAkZLeGMob1Lz4ET223Q7K3FTweXCuhAtvl22', 'LOCAL', '#', true);
 
 -- Inserindo usuário admin
-insert into usuario (nome, email, senha, auth_provider)
-values ('Admin', 'admin@sistema.com', '$2a$12$VhE1kR.G35Xqy6X2IAkZLeGMob1Lz4ET223Q7K3FTweXCuhAtvl22', 'LOCAL');
+insert into usuario (nome, email, senha, auth_provider, imagem_url, ativo)
+values ('Admin', 'admin@sistema.com', '$2a$12$VhE1kR.G35Xqy6X2IAkZLeGMob1Lz4ET223Q7K3FTweXCuhAtvl22', 'LOCAL', '#', true);
 
 -- Associando o usuário admin ao grupo ADMINISTRADOR
 insert into usuario_grupo (usuario_id, grupo_id)
