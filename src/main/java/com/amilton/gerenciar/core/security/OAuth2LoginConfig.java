@@ -18,9 +18,11 @@ public class OAuth2LoginConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/login","css/**","img/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
+                        .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpoint ->
                                 userInfoEndpoint.userService(oAuth2UserService)
                         )
