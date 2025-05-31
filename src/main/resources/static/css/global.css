@@ -13,14 +13,6 @@ body {
   height: 100vh;
 }
 
-.header-title{
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--header-text-color);    
-    text-align: center;
-    margin-top: 3rem;
-}
-
 header.side-menu {
   position: fixed;
   left: -70px;
@@ -78,6 +70,7 @@ nav {
   height: 432px;
   align-items: center;
   flex-direction: column;
+  margin-top: 3rem;
 }
 
 nav ul {
