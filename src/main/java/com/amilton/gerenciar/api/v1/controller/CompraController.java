@@ -10,6 +10,8 @@ import com.amilton.gerenciar.domain.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -31,11 +33,12 @@ public class CompraController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> criar() {
-        // TODO remover após implementação do login
-        Usuario usuario = new Usuario();
-        usuario.setId(1L);
-        Compra compra = compraService.criar(usuario.getId());
+    public ResponseEntity<?> criar(@AuthenticationPrincipal OidcUser oidcUser) {
+        if (oidcUser == null) {
+            throw new RuntimeException("Usuário não autenticado");
+        }
+
+        Compra compra = compraService.criar(oidcUser.getAttribute("usuario_id"));
 
         URI uri = ResourceUriHelper.buildUri(compra.getId());
 

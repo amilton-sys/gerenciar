@@ -1,27 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+@import url('variables.css');
 
-:root {
-  --btn-secondary: #E4E7EB;
-  --primary-color: #299D91;
-  --color-sub-title: #191D23;
-
-  --title-size: 3rem;
-  --subtile-size: 1.25rem;
-  --btn-text-size: 1.25rem;
-  --btn-width: 100%;
-  --btn-height: 3.5rem;
-  --logo-google-width: 1.5rem;
-  --logo-google-height: 1.5rem;
+.title {
+  color: var(--primary-color);
+  font-size: var(--title-size);
+  text-align: center;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+.sub-title {
+  color: var(--color-sub-title);
+  font-size: var(--subtile-size);
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,19 +34,6 @@ main {
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.title {
-  color: var(--primary-color);
-  font-size: var(--title-size);
-  text-align: center;
-}
-
-.sub-title {
-  color: var(--color-sub-title);
-  font-size: var(--subtile-size);
-  text-align: center;
-  margin-bottom: 2rem;
 }
 
 .btn {

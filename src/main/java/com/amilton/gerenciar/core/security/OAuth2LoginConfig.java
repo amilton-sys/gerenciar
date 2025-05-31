@@ -25,11 +25,10 @@ public class OAuth2LoginConfig {
                         .userInfoEndpoint(userInfoEndpoint ->
                                 userInfoEndpoint.oidcUserService(oAuth2UserService)
                         )
-                        // TODO ALTERAR REDIRECT PARA A TELA CORRETA QUANDO ESTIVER FEITA
-                        .defaultSuccessUrl("/todo-implementar", true)
+                        .defaultSuccessUrl("/", true)
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/login")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .deleteCookies("JSESSIONID")

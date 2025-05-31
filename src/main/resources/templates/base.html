@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html
+  lang="pt"
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="layout(content, pageTitle)"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title th:text="${pageTitle}"></title>
+    <link rel="stylesheet" href="css/global.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
+  </head>
+  <body>
+    <header id="side-menu" class="side-menu">
+      <h1 class="header-title">G</h1>
+      <nav>
+        <ul>
+          <li>
+            <i class="material-symbols-outlined">dashboard</i>
+          </li>
+          <li>
+            <i class="material-symbols-outlined">point_of_sale</i>
+          </li>
+          <li>
+            <i class="material-symbols-outlined">payment_arrow_down</i>
+          </li>
+          <li>
+            <i class="material-symbols-outlined">shopping_cart_checkout</i>
+          </li>
+        </ul>
+      </nav>
+      <form action="/logout" method="post">
+        <button>
+          <i class="material-symbols-outlined">logout</i>
+        </button>
+      </form>
+      <div class="separator"></div>
+      <div class="user-info">
+        <img th:src="${picture}" alt="Imagem do Usuário" class="user-logo" />
+      </div>
+    </header>
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <section th:replace="${content}"></section>
+    <script src="js/script.js" defer></script>
+  </body>
+</html>

@@ -24,6 +24,7 @@ public class CompraService {
         if (compraExistente.isPresent()) {
             throw new RuntimeException("Usuario de id: %s já possui uma compra".formatted(usuarioId));
         }
+        
         Compra compra = new Compra();
         compra.setUsuario(usuario);
         return this.compraRespository.save(compra);
