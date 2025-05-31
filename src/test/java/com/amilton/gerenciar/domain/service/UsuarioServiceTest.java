@@ -10,7 +10,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
 class UsuarioServiceTest {
@@ -31,7 +32,6 @@ class UsuarioServiceTest {
 
         String email = "amiltonjose.pe@gmail.com";
         Usuario usuario = usuarioService.cadastrar(email, oAuth2User);
-        Usuario usuario = usuarioService.cadastrarNovoUsuario(email, oAuth2User);
         assertNotNull(usuario);
         assertEquals(email, usuario.getEmail());
         assertEquals("Nome do Usuário", usuario.getNome());
