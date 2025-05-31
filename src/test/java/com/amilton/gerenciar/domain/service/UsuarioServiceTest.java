@@ -31,7 +31,7 @@ class UsuarioServiceTest {
 
         String email = "amiltonjose.pe@gmail.com";
         Usuario usuario = usuarioService.cadastrar(email, oAuth2User);
-
+        Usuario usuario = usuarioService.cadastrarNovoUsuario(email, oAuth2User);
         assertNotNull(usuario);
         assertEquals(email, usuario.getEmail());
         assertEquals("Nome do Usuário", usuario.getNome());
