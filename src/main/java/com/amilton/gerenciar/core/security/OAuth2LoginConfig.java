@@ -1,19 +1,17 @@
 package com.amilton.gerenciar.core.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
+@RequiredArgsConstructor
 public class OAuth2LoginConfig {
-    private final OAuth2UserService oAuth2UserService;
 
-    public OAuth2LoginConfig(OAuth2UserService oAuth2UserService) {
-        this.oAuth2UserService = oAuth2UserService;
-    }
+    private final OAuth2UserService oAuth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -21,16 +19,16 @@ public class OAuth2LoginConfig {
                         .requestMatchers("/login","css/**","img/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                .csrf(AbstractHttpConfigurer::disable)
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpoint ->
-                                userInfoEndpoint.userService(oAuth2UserService)
+                                userInfoEndpoint.oidcUserService(oAuth2UserService)
                         )
-                        // TODO ALTERAR REDIRECT PARA A TELA CORRETA QUANDO ESTIVER FEITA
-                        .defaultSuccessUrl("/todo-implementar", true)
+                        .defaultSuccessUrl("/", true)
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/login")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .deleteCookies("JSESSIONID")

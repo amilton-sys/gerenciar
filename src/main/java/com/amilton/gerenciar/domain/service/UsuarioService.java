@@ -4,6 +4,7 @@ import com.amilton.gerenciar.domain.model.Usuario;
 import com.amilton.gerenciar.domain.respository.UsuarioRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -16,7 +17,16 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Usuario cadastrarNovoUsuario(String email, OAuth2User oAuth2User) {
+    public Usuario buscar(final Long usuarioId){
+        return usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario de %s não encontrado".formatted(usuarioId)));
+    }
+
+    public Usuario buscarPorEmail(String email){
+        return usuarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuario de %s não encontrado".formatted(email)));
+    }
+
+    @Transactional
+    public Usuario cadastrar(String email, OAuth2User oAuth2User) {
         Usuario novoUsuario = new Usuario();
         novoUsuario.setEmail(email);
         novoUsuario.setNome(oAuth2User.getAttribute("name"));

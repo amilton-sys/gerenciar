@@ -138,9 +138,9 @@ create table despesa (
 create table historico_preco (
     id bigint not null auto_increment,
     produto_id bigint not null,
-    preco_anterior decimal(10,2) not null,
+    preco_anterior decimal(10,2),
     preco_atual decimal(10,2) not null,
-    percentual decimal(5,2) not null,
+    percentual decimal(5,2),
     data_criacao datetime default current_timestamp,
     data_atualizacao datetime default current_timestamp on update current_timestamp,
     primary key (id),
