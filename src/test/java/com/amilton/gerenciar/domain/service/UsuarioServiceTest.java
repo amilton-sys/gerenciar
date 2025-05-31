@@ -22,7 +22,7 @@ class UsuarioServiceTest {
     private UsuarioService usuarioService;
 
     @Test
-    void cadastrarNovoUsuario() {
+    void cadastrar() {
         OAuth2User oAuth2User = Mockito.mock(OAuth2User.class);
         Mockito.when(oAuth2User.getAttribute("name")).thenReturn("Nome do Usuário");
         Mockito.when(oAuth2User.getAttribute("picture")).thenReturn("URL da Imagem");
@@ -30,8 +30,8 @@ class UsuarioServiceTest {
         Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenAnswer(i -> i.getArgument(0));
 
         String email = "amiltonjose.pe@gmail.com";
+        Usuario usuario = usuarioService.cadastrar(email, oAuth2User);
         Usuario usuario = usuarioService.cadastrarNovoUsuario(email, oAuth2User);
-
         assertNotNull(usuario);
         assertEquals(email, usuario.getEmail());
         assertEquals("Nome do Usuário", usuario.getNome());

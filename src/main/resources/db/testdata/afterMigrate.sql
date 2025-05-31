@@ -83,6 +83,14 @@ select
 from usuario u
 where u.email = 'admin@sistema.com';
 
+insert into compra (usuario_id, data_compra, valor_total)
+select
+    u.id,
+    now(),
+    coalesce((select sum(p.valor_unitario * p.quantidade) from produto p), 0)
+from usuario u
+where u.email = 'premium@sistema.com';
+
 insert into compra_produto (compra_id, produto_id)
 select c.id, p.id from compra c, produto p;
 
