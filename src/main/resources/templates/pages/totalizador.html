@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html
+  lang="pt"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{base::layout(~{::section}, 'Totalizador')}"
+>
+  <body>
+    <section>
+      <div class="totalizador-container">
+        <div class="totalizador-item">
+          <p>R$ 15.000,00</p>
+        </div>
+      </div>
+      <div class="menu">
+        <p class="sub-title">Detalhes das Compras</p>
+        <button id="openModal">Adicionar</button>
+        
+        <div class="modal" id="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <p class="modal-title-header">Adicionar Compra</p>
+              <span class="material-symbols-outlined close-button" id="closeModal">close</span>
+            </div>
+             <div class="modal-body">
+               <form id="addPurchaseForm" class="formModal">
+                <input type="text" placeholder="Qual é o nome?" id="name" name="name" class="name" required>
+                
+                <select id="category" name="category" class="category" required>
+                  <option value="Pesados">Pesados</option>
+                  <option value="Frios">Frios</option>
+                  <option value="Bebidas">Bebidas</option>
+                </select>
+                
+                <input type="number" placeholder="Qual é a quantidade?" id="quantity" name="quantity" class="quantity" required min="1">
+                
+                <input type="text" placeholder="Qual é o valor?" id="value" name="value" class="value" required pattern="\d+(\,\d{2})?">
+                
+                <button type="submit" id="btnSalvar">Salvar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Qtd</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Arroz</td>
+              <td>Pesados</td>
+              <td>3</td>
+              <td>R$ 10,00</td>
+            </tr>
+            <tr>
+              <td>Carne</td>
+              <td>Frios</td>
+              <td>3</td>
+              <td>R$ 10,00</td>
+            </tr>
+            <tr>
+              <td>Suco</td>
+              <td>Bebidas</td>
+              <td>3</td>
+              <td>R$ 10,00</td>
+            </tr>
+            <tr>
+              <td>Suco</td>
+              <td>Bebidas</td>
+              <td>3</td>
+              <td>R$ 10,00</td>
+            </tr>
+            <tr>
+              <td>Suco</td>
+              <td>Bebidas</td>
+              <td>3</td>
+              <td>R$ 10,00</td>
+            </tr>
+            <tr>
+              <td>Suco</td>
+              <td>Bebidas</td>
+              <td>3</td>
+              <td>R$ 10,00</td>
+            </tr>
+            <tr>
+              <td>Suco</td>
+              <td>Bebidas</td>
+              <td>3</td>
+              <td>R$ 10,00</td>
+            </tr>
+            <tr>
+              <td>Suco</td>
+              <td>Bebidas</td>
+              <td>3</td>
+              <td>R$ 10,00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </body>
+</html>
